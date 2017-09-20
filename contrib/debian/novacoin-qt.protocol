@@ -1,0 +1,11 @@
+[Protocol]
+exec=RajmudraCoin-qt '%u'
+protocol=RajmudraCoin
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

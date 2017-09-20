@@ -1,0 +1,2 @@
+debian/bin/RajmudraCoind usr/bin
+src/RajmudraCoind usr/lib/RajmudraCoin

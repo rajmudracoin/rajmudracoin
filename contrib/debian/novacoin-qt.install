@@ -1,0 +1,5 @@
+RajmudraCoin-qt usr/bin
+share/pixmaps/RajmudraCoin32.xpm usr/share/pixmaps
+share/pixmaps/RajmudraCoin80.xpm usr/share/pixmaps
+debian/RajmudraCoin-qt.desktop usr/share/applications
+debian/RajmudraCoin-qt.protocol usr/share/kde4/services/

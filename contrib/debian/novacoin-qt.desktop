@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=RajmudraCoin
+Comment=RajmudraCoin P2P Cryptocurrency
+Comment[ru]=RajmudraCoin, P2P криптовалюта
+Comment[fr]=RajmudraCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=RajmudraCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/RajmudraCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/RajmudraCoin80.xpm
+MimeType=x-scheme-handler/RajmudraCoin;
+Categories=Office;

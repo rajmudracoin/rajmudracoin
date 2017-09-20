@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: RajmudraCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# RajmudraCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable RajmudraCoin service.
+# RajmudraCoin_config (path): Set to /usr/local/etc/RajmudraCoin.conf by default.
+# RajmudraCoin_user:  The user account RajmudraCoin daemon runs as. It uses 'root' user by default.
+# RajmudraCoin_group: The group account RajmudraCoin daemon runs as. It uses 'wheel' group by default.
+# RajmudraCoin_datadir (str): Default to "/var/db/RajmudraCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=RajmudraCoin
+rcvar=RajmudraCoin_enable
+
+: ${RajmudraCoin_enable:=NO}
+: ${RajmudraCoin_config=/usr/local/etc/RajmudraCoin.conf}
+: ${RajmudraCoin_datadir=/var/db/RajmudraCoin}
+: ${RajmudraCoin_user="root"}
+: ${RajmudraCoin_group="wheel"}
+
+required_files=${RajmudraCoin_config}
+command=/usr/local/bin/RajmudraCoind
+RajmudraCoin_chdir=${RajmudraCoin_datadir}
+pidfile="${RajmudraCoin_datadir}/RajmudraCoind.pid"
+stop_cmd=RajmudraCoin_stop
+command_args="-conf=${RajmudraCoin_config} -datadir=${RajmudraCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+RajmudraCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${RajmudraCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${RajmudraCoin_user}:${RajmudraCoin_group} ${RajmudraCoin_datadir}
+}
+
+RajmudraCoin_prestart()
+{
+	if [ ! -d "${RajmudraCoin_datadir}/." ]; then
+		RajmudraCoin_create_datadir || return 1
+	fi
+}
+
+RajmudraCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+RajmudraCoin_stop()
+{
+    RajmudraCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${RajmudraCoin_config} -datadir=${RajmudraCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

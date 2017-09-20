@@ -1,0 +1,11 @@
+[Unit]
+Description=RajmudraCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=RajmudraCoin
+ExecStart=/opt/RajmudraCoin/RajmudraCoind
+
+[Install]
+WantedBy=multi-user.target
